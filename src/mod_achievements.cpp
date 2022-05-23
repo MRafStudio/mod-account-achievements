@@ -30,7 +30,20 @@ public:
         {
 			if (sConfigMgr->GetOption<bool>("Account.Achievements.Announce", true))
             {
-                ChatHandler(pPlayer->GetSession()).SendSysMessage("This server is running the |cff4CFF00AccountAchievements |rmodule.");
+				WorldSession* session = pPlayer->GetSession();
+				std::string message = "";
+				switch (session->GetSessionDbLocaleIndex())
+				{
+				case LOCALE_ruRU:
+				{
+					message = "На сервере запущен модуль";
+					break;
+				}
+				default:
+					message = "This server is running the";
+					break;
+				}
+				ChatHandler(pPlayer->GetSession()).SendSysMessage(message + " |cff4CFF00AccountAchievements |rmodule.");
             }
 
 			std::vector<uint32> Guids;
